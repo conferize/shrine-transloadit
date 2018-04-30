@@ -250,10 +250,15 @@ class Shrine
 
         # Creates a new TransloaditFile for building steps, with an optional
         # import step applied.
-        def transloadit_file(io = nil)
+        def transloadit_file(io = nil, import_step_options: {})
           file = TransloaditFile.new(transloadit: transloadit)
-          file = file.add_step(transloadit_import_step("import", io)) if io
-          file
+
+          if io
+            step = transloadit_import_step("import", io, import_step_options)
+            file.add_step(step)
+          else
+            file
+          end
         end
 
         # Accepts a TransloaditFile, a hash of TransloaditFiles or a template,

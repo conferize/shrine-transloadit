@@ -356,6 +356,16 @@ describe Shrine::Plugins::Transloadit do
   end
 
   describe "#transloadit_file" do
+    it "accepts additional options for import step" do
+      transloadit_file = @store.transloadit_file(@cached_image, import_step_options: {
+        output_meta: { has_transparency: true }
+      })
+
+      import_step = transloadit_file.steps.find { |step| step.robot =~ /import/ }
+
+      assert_equal({ has_transparency: true }, import_step.options[:output_meta])
+    end
+
     describe "#add_step" do
       it "creates a new instance" do
         transloadit_file = @store.transloadit_file
