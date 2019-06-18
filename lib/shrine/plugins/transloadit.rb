@@ -238,6 +238,7 @@ class Shrine
               bucket:        storage.bucket.name,
               bucket_region: storage.client.config.region,
               path:          [*storage.prefix, path].join("/"),
+              acl:           "private",
             )
           else
             raise Error, "Cannot construct a transloadit export step from #{storage.inspect}"
